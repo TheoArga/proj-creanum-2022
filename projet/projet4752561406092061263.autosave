@@ -1,0 +1,23 @@
+/**
+* Projet Creation Numérique
+* Arga Théo & Alisa Hasanli
+* (c) 2022
+*
+* [description projet]
+*
+**/
+
+ class sticks
+{
+    private PImage img;
+    private PVector center;
+
+    public sticks(PImage im, PVector ctr)
+    {
+        img = im;
+        
+    }
+
+
+
+}
