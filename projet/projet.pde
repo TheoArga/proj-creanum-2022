@@ -28,9 +28,9 @@ void settings()
 {
     photo = loadImage("img.png");
     int h,w;
-    float r = photo.width / photo.height;
+    float r = photo.width / (float)photo.height;
     h = (int)(min(displayHeight,displayWidth) * 0.8);
-    w = java.lang.Math.round(h / r);
+    w = java.lang.Math.round(h * r);
     size(w,h);
     
     print("h :" + h + " w :" + w + " r :" +r);
@@ -45,5 +45,6 @@ void setup()
 }
 
 void draw() {
-    
+    photo.resize(width,height);
+    image(photo,0,0);
 }
