@@ -7,17 +7,27 @@
 *
 **/
 import java.lang.Math;
+import java.lang.Float;
 
 
 PImage photo;
 Sticks stcks;
-boolean draw = true;
+
+
+boolean draw = true, fps = false;
+long framestart,frameend;
+float frametime;
+
+int nnn = 1;
 
 //Settings :
-float rectLength = 45;
-float rectWidth = 7;
-float rectOrientation = 0; // °
-float angleDeviation = 90; // °
+boolean USE_OPTIMIZER = true;
+
+
+float rectLength = 20;
+float rectWidth = 3;
+float rectOrientation = 125; // °
+float angleDeviation = 15; // °
 float rectLengthDeviation = 0.20; // %
 float rectWidthDeviation = 0.20;// %
 
@@ -38,15 +48,15 @@ class Sticks
         
         int x,y;
         x = (int) Math.floor(random(0 , img.width - 3) + topLeft.x);
-        y = (int) Math.floor(random(0 , img.width - 3) + topLeft.y);
+        y = (int) Math.floor(random(0 , img.height - 3) + topLeft.y);
         
         
         color tl, tr, bl, br;
         
-        tl = photo.get(x,y);
-        tr = photo.get(x + 2,y);
-        bl = photo.get(x,y + 2);
-        br = photo.get(x + 2,y + 2);
+        tl = img.get(x,y);
+        tr = img.get(x + 2,y);
+        bl = img.get(x,y + 2);
+        br = img.get(x + 2,y + 2);
         
         
         
@@ -67,15 +77,17 @@ class Sticks
         
         
         
+        noStroke();
+        
         beginShape();
         fill(tl);
-        vertex(topLeft.x, topLeft.y);
+        vertex(topLeft.x, topLeft.y, 0);
         fill(tr);
-        vertex(topRight.x, topRight.y);
+        vertex(topRight.x, topRight.y, 0);
         fill(br);
-        vertex(botRight.x, botRight.y);
+        vertex(botRight.x, botRight.y, 0);
         fill(bl);
-        vertex(botLeft.x,botLeft.y);
+        vertex(botLeft.x,botLeft.y, 0);
         endShape(CLOSE);
         
     }
@@ -122,9 +134,14 @@ class Options
     }
 }
 
+
+//================================================================
+// PROGRAM SETTINGS AND SETUP
+//================================================================
+
 void settings() 
 {
-    photo = loadImage("img2.png");
+    photo = loadImage("img5.jpg");
     int h,w;
     float r = photo.width / (float)photo.height;
     h = (int)(min(displayHeight,displayWidth) * 0.8);
@@ -137,18 +154,29 @@ void settings()
 
 
 void setup() 
-{
+{   
+    frameRate(1000);
     background(0);
     colorMode(HSB,100);
-    photo.loadPixels();
+    
+    
     photo.resize(width,height);
-    //image(photo,0,0);
+    
+    
+    
+    
     stcks = new Sticks(photo, new PVector(0,0));
-    noStroke();
-    frameRate(1000);
+    
+    
     
     
 }
+
+
+
+//================================================================
+// DRAW LOOP & EVENTS
+//================================================================
 
 void keyPressed() {
     if (key == 'a') {
@@ -158,29 +186,74 @@ void keyPressed() {
             draw = true;
         }
     }
+    if (key == 'f') {
+        if (fps) {
+            fps = false;
+        } else {
+            fps = true;
+        }
+    }
 }
 
 
 
 void draw() {
-    if (draw) {
-        //long framestart = System.nanoTime();
+    
+    //Performance optimization depending on machine and fps.
+    if (frameCount < 5000 && !fps && USE_OPTIMIZER) {
+        framestart = System.nanoTime();
         
-        
-        
-        stcks.drawStick();
-        
-        
-        /*
-        longframeend = System.nanoTime();
-        float frametime = (frameend - framestart) / 100000.0f;
-        
-        if ((int)frameCount % (int)frameRate == 0) {
-        
-        print("frametime : " + frametime + " ms, fps : " + frameRate + " \n Max theoretical framerate = " + (1000f / frametime)  + "\n");
     }
+    
+    //Performance mesuring
+    if (fps)
+        framestart = System.nanoTime();
+    
+    
+    
+    //Draw loop
+    if (draw) {
         
-        */
         
+        
+        for (int i = 0; i < nnn;i++) {
+            stcks.drawStick();
+        }
+        
+        
+    }
+    
+    
+    //Frame end and time calculation
+    
+    
+    if (fps || (frameCount < 5000 &&  USE_OPTIMIZER)) {
+        frameend = System.nanoTime();
+        frametime = (frameend - framestart) / 100000.0f;
+    }
+    
+    
+    //Performance optimization depending on machine and fps.
+    if (frameCount < 5000 &&  USE_OPTIMIZER) {
+        
+        if ((frameRate + 10 < Math.round(1000f / frametime)) && draw && frametime <1.0)
+            nnn++; 
+    }
+    
+    //Performance Mesuring
+    if (fps) {
+        
+        
+        if (frameCount % 50 == 0)
+        {  
+            fill(0,0,0);
+            rect(0,0,270,40);
+            fill(0,0,100);
+            textSize(11);
+            textAlign(LEFT, TOP);
+            text("frametime : " + Math.round(frametime * 100) / 100f + " ms, fps : " + Math.round(frameRate) + ", Sticks/draw = " + nnn + " \n Max theoretical framerate = " + Math.round(1000f / frametime) + "\n" ,0,0);
+            
+            
+        }
     }
 }
