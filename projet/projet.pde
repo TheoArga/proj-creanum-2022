@@ -24,12 +24,12 @@ int nnn = 1;
 boolean USE_OPTIMIZER = true;
 
 
-float rectLength = 20;
-float rectWidth = 3;
-float rectOrientation = 125; // °
-float angleDeviation = 15; // °
-float rectLengthDeviation = 0.20; // %
-float rectWidthDeviation = 0.20;// %
+float rectLength = 7;
+float rectWidth = 1;
+float rectOrientation =45; // °
+float angleDeviation = 5; // °
+float rectLengthDeviation = 0.9; // %
+float rectWidthDeviation = 0.1;// %
 
 class Sticks
 {
@@ -63,10 +63,14 @@ class Sticks
         
         PVector center = new PVector(x + 1.5 ,y + 1.5);
         
-        PVector topLeft = new PVector(center.x - rectWidth / 2, center.y - rectLength / 2);
-        PVector topRight = new PVector(center.x + rectWidth / 2, center.y - rectLength / 2);
-        PVector botLeft = new PVector(center.x - rectWidth / 2, center.y + rectLength / 2);
-        PVector botRight = new PVector(center.x + rectWidth / 2, center.y + rectLength / 2);
+        float lengthD, widthD;
+        lengthD = random(1-rectLengthDeviation, 1+rectLengthDeviation);
+        widthD= random(1-rectWidthDeviation, 1+rectWidthDeviation);
+        
+        PVector topLeft = new PVector(center.x - (rectWidth + rectWidth*widthD) / 2, center.y - (rectLength + rectLength*lengthD) / 2);
+        PVector topRight = new PVector(center.x + (rectWidth + rectWidth*widthD) / 2, center.y - (rectLength + rectLength*lengthD) / 2);
+        PVector botLeft = new PVector(center.x - (rectWidth + rectWidth*widthD) / 2, center.y + (rectLength + rectLength*lengthD) / 2);
+        PVector botRight = new PVector(center.x + (rectWidth + rectWidth*widthD) / 2, center.y + (rectLength + rectLength*lengthD) / 2);
         
         float angleStick = rectOrientation + random( -angleDeviation, angleDeviation);
         
@@ -130,7 +134,7 @@ class Options
         angleDeviation = new_angleDeviation;
         rectLengthDeviation = new_rectLengthDeviation; 
         rectWidthDeviation = new_rectWidthDeviation;
-        
+        frameCount = 0;
     }
 }
 
@@ -141,7 +145,7 @@ class Options
 
 void settings() 
 {
-    photo = loadImage("img5.jpg");
+    photo = loadImage("img2.png");
     int h,w;
     float r = photo.width / (float)photo.height;
     h = (int)(min(displayHeight,displayWidth) * 0.8);
@@ -236,7 +240,7 @@ void draw() {
     //Performance optimization depending on machine and fps.
     if (frameCount < 5000 &&  USE_OPTIMIZER) {
         
-        if ((frameRate + 10 < Math.round(1000f / frametime)) && draw && frametime <1.0)
+        if ((frameRate < Math.round(1000f / frametime)) && draw)
             nnn++; 
     }
     
@@ -244,14 +248,14 @@ void draw() {
     if (fps) {
         
         
-        if (frameCount % 50 == 0)
+        if (frameCount % Math.ceil((float)frameRate/60.0f) == 0)
         {  
             fill(0,0,0);
             rect(0,0,270,40);
             fill(0,0,100);
             textSize(11);
             textAlign(LEFT, TOP);
-            text("frametime : " + Math.round(frametime * 100) / 100f + " ms, fps : " + Math.round(frameRate) + ", Sticks/draw = " + nnn + " \n Max theoretical framerate = " + Math.round(1000f / frametime) + "\n" ,0,0);
+            text("frametime : " + Math.round(frametime * 100) / 100f + " ms, fps : " + Math.round(frameRate) + ", Sticks/draw = " + nnn + " \n Max theoretical framerate = " + Math.round(1000f / frametime) +", SpS ="+ Math.floor(frameRate*nnn) + "\n" ,0,0);
             
             
         }
