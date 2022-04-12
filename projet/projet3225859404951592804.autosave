@@ -11,13 +11,12 @@ import java.lang.Math;
 
 PImage photo;
 Sticks stcks;
-boolean draw = true;
 
 //Settings :
-float rectLength = 45;
-float rectWidth = 7;
-float rectOrientation = 0; // °
-float angleDeviation = 90; // °
+float rectLength = 20;
+float rectWidth = 5;
+float rectOrientation = 75; // °
+float angleDeviation = 18; // °
 float rectLengthDeviation = 0.20; // %
 float rectWidthDeviation = 0.20;// %
 
@@ -145,42 +144,12 @@ void setup()
     //image(photo,0,0);
     stcks = new Sticks(photo, new PVector(0,0));
     noStroke();
-    frameRate(1000);
     
     
 }
-
-void keyPressed() {
-    if (key == 'a') {
-        if (draw) {
-            draw = false;
-        } else {
-            draw = true;
-        }
-    }
-}
-
-
 
 void draw() {
-    if (draw) {
-        //long framestart = System.nanoTime();
-        
-        
-        
-        stcks.drawStick();
-        
-        
-        /*
-        longframeend = System.nanoTime();
-        float frametime = (frameend - framestart) / 100000.0f;
-        
-        if ((int)frameCount % (int)frameRate == 0) {
-        
-        print("frametime : " + frametime + " ms, fps : " + frameRate + " \n Max theoretical framerate = " + (1000f / frametime)  + "\n");
-    }
-        
-        */
-        
-    }
+    
+    
+    stcks.drawStick();
 }
