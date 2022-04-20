@@ -1,5 +1,3 @@
-import g4p_controls.*;
-
 /**
 * Projet Creation Numérique
 * Arga Théo & Alisa Hasanli
@@ -11,25 +9,21 @@ import g4p_controls.*;
 import java.lang.Math;
 import java.lang.Float;
 
-
+//Global Variables
 PImage photo;
 Sticks stcks;
 PWindow SecondWindow;
-
-
 boolean draw = true, fps = false;
 long framestart,frameend;
 float frametime;
-
-int nnn = 1;
+int sticksPerFrame = 1;
 
 //Settings :
 boolean USE_OPTIMIZER = true;
 
-
 float rectLength = 7;
 float rectWidth = 1;
-float rectOrientation =45; // °
+float rectOrientation = 45; // °
 float angleDeviation = 5; // °
 float rectLengthDeviation = 0.9; // %
 float rectWidthDeviation = 0.1;// %
@@ -48,11 +42,9 @@ class Sticks
     public void drawStick()
     {
         
-        
         int x,y;
         x = (int) Math.floor(random(0 , img.width - 3) + topLeft.x);
         y = (int) Math.floor(random(0 , img.height - 3) + topLeft.y);
-        
         
         color tl, tr, bl, br;
         
@@ -61,19 +53,16 @@ class Sticks
         bl = img.get(x,y + 2);
         br = img.get(x + 2,y + 2);
         
-        
-        
-        
         PVector center = new PVector(x + 1.5 ,y + 1.5);
         
         float lengthD, widthD;
-        lengthD = random(1-rectLengthDeviation, 1+rectLengthDeviation);
-        widthD= random(1-rectWidthDeviation, 1+rectWidthDeviation);
+        lengthD = random(1 - rectLengthDeviation, 1 + rectLengthDeviation);
+        widthD = random(1 - rectWidthDeviation, 1 + rectWidthDeviation);
         
-        PVector topLeft = new PVector(center.x - (rectWidth + rectWidth*widthD) / 2, center.y - (rectLength + rectLength*lengthD) / 2);
-        PVector topRight = new PVector(center.x + (rectWidth + rectWidth*widthD) / 2, center.y - (rectLength + rectLength*lengthD) / 2);
-        PVector botLeft = new PVector(center.x - (rectWidth + rectWidth*widthD) / 2, center.y + (rectLength + rectLength*lengthD) / 2);
-        PVector botRight = new PVector(center.x + (rectWidth + rectWidth*widthD) / 2, center.y + (rectLength + rectLength*lengthD) / 2);
+        PVector topLeft = new PVector(center.x - (rectWidth + rectWidth * widthD) / 2, center.y - (rectLength + rectLength * lengthD) / 2);
+        PVector topRight = new PVector(center.x + (rectWidth + rectWidth * widthD) / 2, center.y - (rectLength + rectLength * lengthD) / 2);
+        PVector botLeft = new PVector(center.x - (rectWidth + rectWidth * widthD) / 2, center.y + (rectLength + rectLength * lengthD) / 2);
+        PVector botRight = new PVector(center.x + (rectWidth + rectWidth * widthD) / 2, center.y + (rectLength + rectLength * lengthD) / 2);
         
         float angleStick = rectOrientation + random( -angleDeviation, angleDeviation);
         
@@ -85,7 +74,6 @@ class Sticks
         
         
         noStroke();
-        
         beginShape();
         fill(tl);
         vertex(topLeft.x, topLeft.y, 0);
@@ -127,8 +115,6 @@ class Options
     float new_rectLengthDeviation; 
     float new_rectWidthDeviation;
     
-    
-    
     public void applyOptions()
     {
         rectLength = new_rectLength;
@@ -155,8 +141,6 @@ void settings()
     w = java.lang.Math.round(h * r);
     size(w,h,P3D);
     
-    print("h :" + h + " w :" + w + " r :" + r);
-    
 }
 
 
@@ -168,17 +152,9 @@ void setup()
     
     
     photo.resize(width,height);
- 
     stcks = new Sticks(photo, new PVector(0,0));
-    
-    //SecondWindow = new PWindow();
-    
-    
-    
-    
+    SecondWindow = new PWindow();       
 }
-
-
 
 //================================================================
 // DRAW LOOP & EVENTS
@@ -207,59 +183,41 @@ void draw() {
     
     //Performance optimization depending on machine and fps.
     if (frameCount < 5000 && !fps && USE_OPTIMIZER) {
-        framestart = System.nanoTime();
-        
+        framestart = System.nanoTime();   
     }
     
     //Performance mesuring
     if (fps)
         framestart = System.nanoTime();
-    
-    
-    
     //Draw loop
-    if (draw) {
-        
-        
-        
-        for (int i = 0; i < nnn;i++) {
+    if (draw) {   
+        for (int i = 0; i < sticksPerFrame;i++) {
             stcks.drawStick();
-        }
-        
-        
+        }    
     }
     
-    
     //Frame end and time calculation
-    
-    
     if (fps || (frameCount < 5000 &&  USE_OPTIMIZER)) {
         frameend = System.nanoTime();
         frametime = (frameend - framestart) / 100000.0f;
     }
     
-    
     //Performance optimization depending on machine and fps.
     if (frameCount < 5000 &&  USE_OPTIMIZER) {
-        
         if ((frameRate < Math.round(1000f / frametime)) && draw)
-            nnn++; 
+            sticksPerFrame++; 
     }
     
     //Performance Mesuring
     if (fps) {
-        
-        
-        if (frameCount % Math.ceil((float)frameRate/60.0f) == 0)
+        if (frameCount % Math.ceil((float)frameRate / 60.0f) == 0)
         {  
             fill(0,0,0);
             rect(0,0,270,40);
             fill(0,0,100);
             textSize(11);
             textAlign(LEFT, TOP);
-            text("frametime : " + Math.round(frametime * 100) / 100f + " ms, fps : " + Math.round(frameRate) + ", Sticks/draw = " + nnn + " \n Max theoretical framerate = " + Math.round(1000f / frametime) +", SpS ="+ Math.floor(frameRate*nnn) + "\n" ,0,0);
-            
-            
+            text("frametime : " + Math.round(frametime * 100) / 100f + " ms, fps : " + Math.round(frameRate) + ", Sticks/draw = " + sticksPerFrame + " \n Max theoretical framerate = " + Math.round(1000f / frametime) + ", SpS =" + Math.floor(frameRate * sticksPerFrame) + "\n" ,0,0); 
         }
     }
 }
