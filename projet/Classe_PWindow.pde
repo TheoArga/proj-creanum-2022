@@ -10,30 +10,34 @@ class PWindow extends PApplet
   }
 
   void settings() {
-    size(350, 800, P2D);
+    size(350, 350, P2D);
   }
 
   void setup() {
-    background(#CCB9F5);
+    background(#330F5A);
     surface.setLocation(20, 20);
     surface.setTitle("Options");
     setDefaultClosePolicy(this, true);
     TXTfont = createFont("Arial", 13);
     frameRate(20);
-    
-    opt = new Options(this);
+
+    opt = new Options(this, this);
     opt.optionsSetup();
   }
 
   void draw() {
-    background(#CCB9F5);
+    background(#330F5A);
   }
 
-  void closeOptions() {
+  public void closeOptions() {
     exit();
   }
 
-  
+  void keyPressed() {
+    if (key == ESC) {
+      key = 0;  // Empêche d'utiliser la touche ESC
+    }
+  }
 
 
 
