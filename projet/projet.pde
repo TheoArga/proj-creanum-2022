@@ -22,16 +22,16 @@ float frametime;
 int sticksPerFrame = 1;
 
 //Settings :
-boolean USE_OPTIMIZER = true;
+boolean USE_OPTIMIZER = false;
 
 int framerate = 1000;
 String imageName = "img2.png";
-float rectLength = 7;
-float rectWidth = 1;
-float rectOrientation = 0; // °
-float angleDeviation = 0; // °
-float rectLengthDeviation = 0.9; // %
-float rectWidthDeviation = 0.1;// %
+float rectLength = 12.5;
+float rectWidth = 0.5;
+float rectOrientation = 27; // °
+float angleDeviation = 25; // °
+float rectLengthDeviation = 0.25; // %
+float rectWidthDeviation = 0.25;// %
 
 //================================================================
 // PROGRAM SETTINGS AND SETUP
@@ -39,6 +39,7 @@ float rectWidthDeviation = 0.1;// %
 
 void settings() 
 {
+  //Set size of window to be of same aspect ratio of picture and fit screen
   photo = loadImage(imageName);
   int h, w;
   float r = photo.width / (float)photo.height;
@@ -56,13 +57,13 @@ void setup()
   colorMode(HSB, 100);
   setDefaultClosePolicy(this, true);
 
-
+  //resize picture to screen size
   photo.resize(width, height);
   stcks = new Sticks(photo, new PVector(0, 0));
   SecondWindow = new PWindow();
 }
 
-
+//Effectively just parts of settings() and setup() redone for a new image
 void restartImage()
 {
   noLoop();
@@ -85,7 +86,7 @@ void closeImage() {
   exit();
 }
 
-
+//Prevents the window from closing when the red cross is pressed
 final void setDefaultClosePolicy(PApplet pa, boolean keepOpen) {
   final Object surf = pa.getSurface().getNative();
   final PGraphics canvas = pa.getGraphics();
@@ -135,7 +136,7 @@ void keyPressed() { // For debug, not used in program by end user
     }
   }
   if (key == ESC) {
-    key = 0;  // Empêche d'utiliser la touche ESC
+    key = 0;  // Prevents from using escape key for closing
   }
 }
 
@@ -150,7 +151,7 @@ void draw() {
   //Performance mesuring
   if (fps)
     framestart = System.nanoTime();
-  //Draw loop
+  //actual Draw loop
   if (draw) {   
     for (int i = 0; i < sticksPerFrame; i++) {
       stcks.drawStick();
