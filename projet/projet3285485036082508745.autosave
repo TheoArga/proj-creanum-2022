@@ -10,7 +10,6 @@
 import java.lang.Math;
 import java.lang.Float;
 import controlP5.*;
-import java.util.*;
 
 //Global Variables
 PImage photo;
@@ -77,7 +76,7 @@ void restartImage()
 }
 
 void closeImage(){
-    exit();
+    
 }
 
 
@@ -137,6 +136,7 @@ void keyPressed() {
 
 
 void draw() {
+    print(frameCount + "\n");
     //Performance optimization depending on machine and fps.
     if (frameCount < 5000 && !fps && USE_OPTIMIZER) {
         framestart = System.nanoTime();   

@@ -1,31 +1,43 @@
 class PWindow extends PApplet
-{
-    PFont TXTfont;
-    Button b;
-    PWindow() {
+{   
+  PFont TXTfont;
+  Options opt;
+
+  public PWindow() 
+  {
     super();
     PApplet.runSketch(new String[] {this.getClass().getSimpleName()}, this);
   }
 
   void settings() {
-    size(500, 200, P2D);
+    size(350, 800, P2D);
   }
 
   void setup() {
     background(#CCB9F5);
-    surface.setLocation(20,20);
-    setDefaultClosePolicy(this, false);
+    surface.setLocation(20, 20);
+    surface.setTitle("Options");
+    setDefaultClosePolicy(this, true);
     TXTfont = createFont("Arial", 13);
-    b = new Button("Photo 1", 50, 65, 50, 30, this);
+    frameRate(20);
+    
+    opt = new Options(this);
+    opt.optionsSetup();
   }
 
   void draw() {
-    fill(240);
-    b.display();
-    println("running PWINDOW!", frameCount);
+    background(#CCB9F5);
   }
+
+  void closeOptions() {
+    exit();
+  }
+
   
-   final void setDefaultClosePolicy(PApplet pa, boolean keepOpen) {
+
+
+
+  final void setDefaultClosePolicy(PApplet pa, boolean keepOpen) {
     final Object surf = pa.getSurface().getNative();
     final PGraphics canvas = pa.getGraphics();
 
@@ -52,5 +64,5 @@ class PWindow extends PApplet
       f.setDefaultCloseOperation(keepOpen?
         f.DO_NOTHING_ON_CLOSE : f.DISPOSE_ON_CLOSE);
     }
-   }
+  }
 }
