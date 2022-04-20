@@ -1,3 +1,5 @@
+import g4p_controls.*;
+
 /**
 * Projet Creation Numérique
 * Arga Théo & Alisa Hasanli
@@ -12,6 +14,7 @@ import java.lang.Float;
 
 PImage photo;
 Sticks stcks;
+PWindow SecondWindow;
 
 
 boolean draw = true, fps = false;
@@ -165,11 +168,10 @@ void setup()
     
     
     photo.resize(width,height);
-    
-    
-    
-    
+ 
     stcks = new Sticks(photo, new PVector(0,0));
+    
+    //SecondWindow = new PWindow();
     
     
     
