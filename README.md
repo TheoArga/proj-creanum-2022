@@ -6,6 +6,7 @@ Ce projet a pour but de permettre de recréer une image à partir de batonnets, 
 ###### Exemple :
 - Image originale : 
 <img src="https://user-images.githubusercontent.com/9201566/164674348-3ecef786-4570-422b-bc44-65d84dd36f2e.jpg" width="283" height="426" />
+
 - Image Obtenue par ce procédé :
  <img src="https://user-images.githubusercontent.com/9201566/164675441-68cde482-fa74-4628-8a15-c158cae428a2.png" width="283" height="426" />
 
