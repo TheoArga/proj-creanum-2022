@@ -133,7 +133,7 @@ class Options
       .setStartAngle(PI/2)
       .setAngleRange(TWO_PI);
 
-    new_angleDeviation = cp5.addKnob("° Rectangle Deviation")
+    new_angleDeviation = cp5.addKnob("° Angle Deviation")
       .setRange(0, 360)
       .setValue(rectOrientation)
       .setPosition(185, 195)
