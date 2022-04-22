@@ -3,7 +3,7 @@
  * Arga Théo & Alisa Hasanli
  * (c) 2022
  *
- * [description projet]
+ * Ce projet a pour but de permettre de recréer une image à partir de bâtonnets, ce qui lui donne un effet artistique.
  *
  **/
 //Imports
