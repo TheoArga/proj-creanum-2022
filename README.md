@@ -1,5 +1,5 @@
 # Projet de Creation Numérique
-### Alisa Hasanli & Arga Théo 2022
+### Hasanli Alisa & Arga Théo 2022
 
 Ce projet a pour but de permettre de recréer une image à partir de batonnets, ce qui lui donne un effet stylistique.
 
