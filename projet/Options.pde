@@ -70,7 +70,7 @@ class Options
   //Method used to place the GUI elements
   public void optionsSetup() {
 
-    images = Arrays.asList("img2.png", "img3.jpg", "img4.png", "img5.jpg");
+    images = Arrays.asList("Alpine.png", "Building.jpg", "Cat.jpg", "F1.jpg","Person.jpg","Snowy Landscape.jpg","Tropical.jpg");
 
 
     cp5.addButton("Apply Settings")

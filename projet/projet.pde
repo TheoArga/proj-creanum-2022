@@ -25,7 +25,7 @@ int sticksPerFrame = 1;
 boolean USE_OPTIMIZER = false;
 
 int framerate = 1000;
-String imageName = "img2.png";
+String imageName = "Alpine.png";
 float rectLength = 12.5;
 float rectWidth = 0.5;
 float rectOrientation = 27; // °
