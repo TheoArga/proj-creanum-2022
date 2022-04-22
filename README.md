@@ -24,3 +24,4 @@ Ce projet a pour but de permettre de recréer une image à partir de batonnets, 
   -  **% Rectangle Lenth Deviation** & **% Rectangle Width Deviation** : Choix, en oiurcent, de la variation aléatoire de la taille des battons
   -  **Rectangle Orientation** : Choix de l'angle des battons
   -  **Angle Deviation** : Choix de la deviation d'angle aléatoire, en °
+  - **Quit** : Ferme l'application, l'utilisation de la croix des fenêtre créant des erreurs du aux multiples fenêtres utilisées.
